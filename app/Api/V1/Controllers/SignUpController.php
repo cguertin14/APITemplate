@@ -4,6 +4,8 @@ namespace App\Api\V1\Controllers;
 
 use Config;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\JWTAuth;
 use App\Http\Controllers\Controller;
 use App\Api\V1\Requests\SignUpRequest;
@@ -20,13 +22,15 @@ class SignUpController extends Controller
 
         if(!Config::get('boilerplate.sign_up.release_token')) {
             return response()->json([
-                'status' => 'ok'
+                'status' => 'ok',
+                'user' => $user->only(['id','name','email','first_name','last_name'])
             ], 201);
         }
 
         $token = $JWTAuth->fromUser($user);
         return response()->json([
             'status' => 'ok',
+            'user' => $user->only(['id','name','email','first_name','last_name']),
             'token' => $token
         ], 201);
     }

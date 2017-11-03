@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'domain' => env('API_DOMAIN', null),
+    'domain' => env('API_DOMAIN', 'api.apitemplate.dev'),
 
     /*
     |--------------------------------------------------------------------------
@@ -123,7 +123,7 @@ return [
     |
     */
 
-    'debug' => env('API_DEBUG', false),
+    'debug' => env('API_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------

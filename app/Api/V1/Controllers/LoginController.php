@@ -2,6 +2,7 @@
 
 namespace App\Api\V1\Controllers;
 
+
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tymon\JWTAuth\JWTAuth;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,7 @@ class LoginController extends Controller
      * Log the user in
      *
      * @param LoginRequest $request
-     * @param JWTAuth $JWTAuth
+     * @param $JWTAuth $JWTAuth
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(LoginRequest $request, JWTAuth $JWTAuth)
@@ -38,7 +39,7 @@ class LoginController extends Controller
             ->json([
                 'status' => 'ok',
                 'token' => $token,
-                'expires_in' => Auth::guard()->factory()->getTTL() * 60
+                'expires_in' => Auth::guard()->factory()->getTTL() * 60 . ' seconds'
             ]);
     }
 }

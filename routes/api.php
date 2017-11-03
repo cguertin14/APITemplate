@@ -6,38 +6,39 @@ use Dingo\Api\Routing\Router;
 $api = app(Router::class);
 
 $api->version('v1', function (Router $api) {
-    $api->group(['prefix' => 'auth'], function(Router $api) {
-        $api->post('signup', 'App\\Api\\V1\\Controllers\\SignUpController@signUp');
-        $api->post('login', 'App\\Api\\V1\\Controllers\\LoginController@login');
+    // Auth routes which need api:auth middleware implement it inside their controller.
+    $api->group(['prefix' => 'auth','namespace' => 'App\Api\V1\Controllers'], function(Router $api) {
+        /*
+         *  Normal Auth Login / SignUp
+         */
+        $api->post('signup', 'SignUpController@signUp');
+        $api->post('login', 'LoginController@login');
 
-        $api->post('recovery', 'App\\Api\\V1\\Controllers\\ForgotPasswordController@sendResetEmail');
-        $api->post('reset', 'App\\Api\\V1\\Controllers\\ResetPasswordController@resetPassword');
+        /*
+         * Facebook Login / SignUp
+         */
+        $api->get('/loginfacebook', 'FacebookAuthController@redirect');
+        $api->get('/callbackfb', 'FacebookAuthController@callback');
 
-        $api->post('logout', 'App\\Api\\V1\\Controllers\\LogoutController@logout');
-        $api->post('refresh', 'App\\Api\\V1\\Controllers\\RefreshController@refresh');
-        $api->get('me', 'App\\Api\\V1\\Controllers\\UserController@me');
+        $api->post('recovery', 'ForgotPasswordController@sendResetEmail');
+        $api->post('reset', 'ResetPasswordController@resetPassword');
+
+        $api->post('logout', 'LogoutController@logout');
+        $api->post('refresh', 'RefreshController@refresh');
+        $api->get('me', 'UserController@me');
+        $api->post('validatetoken','RefreshController@validateToken');
     });
 
-    $api->group(['middleware' => 'jwt.auth'], function(Router $api) {
-        $api->get('protected', function() {
-            return response()->json([
-                'message' => 'Access to protected resources granted! You are seeing this text as you provided the token correctly.'
-            ]);
-        });
-
-        $api->get('refresh', [
-            'middleware' => 'jwt.refresh',
-            function() {
-                return response()->json([
-                    'message' => 'By accessing this endpoint, you can refresh your access token at each request. Check out this response headers!'
-                ]);
-            }
-        ]);
+    // Edit User Routes
+    $api->group(['prefix' => 'auth','namespace' => 'App\Api\V1\Controllers','middleware' => 'auth:api'], function (Router $api) {
+        /*
+         * EditUserController
+         */
+        $api->put('edit/password','EditUserController@modifyPassword');
+        $api->put('edit/email','EditUserController@modifyEmail');
+        $api->put('edit/profilepic','EditUserController@modifyProfilePic');
     });
 
-    $api->get('hello', function() {
-        return response()->json([
-            'message' => 'This is a simple example of item returned by your APIs. Everyone can see it.'
-        ]);
-    });
+
+
 });
