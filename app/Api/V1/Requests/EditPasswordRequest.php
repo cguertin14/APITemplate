@@ -2,7 +2,8 @@
 
 namespace App\Api\V1\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Dingo\Api\Http\FormRequest;
+use Config;
 
 class EditPasswordRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class EditPasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,6 @@ class EditPasswordRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return Config::get('boilerplate.edit_password.validation_rules');
     }
 }

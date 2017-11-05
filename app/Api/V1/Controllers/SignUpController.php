@@ -2,6 +2,7 @@
 
 namespace App\Api\V1\Controllers;
 
+use Carbon\Exceptions\InvalidDateException;
 use Config;
 use App\User;
 use Illuminate\Http\Request;
@@ -23,14 +24,14 @@ class SignUpController extends Controller
         if(!Config::get('boilerplate.sign_up.release_token')) {
             return response()->json([
                 'status' => 'ok',
-                'user' => $user->only(['id','name','email','first_name','last_name'])
+                'user' => $user
             ], 201);
         }
 
         $token = $JWTAuth->fromUser($user);
         return response()->json([
             'status' => 'ok',
-            'user' => $user->only(['id','name','email','first_name','last_name']),
+            'user' => $user,
             'token' => $token
         ], 201);
     }

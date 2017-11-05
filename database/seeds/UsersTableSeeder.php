@@ -12,6 +12,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
+        $genders = ['Homme','Femme','Autre'];
         foreach (range(0,15) as $user) {
             $firstname = $faker->firstName;
             $lastname = $faker->lastName;
@@ -21,6 +22,10 @@ class UsersTableSeeder extends Seeder
                 'first_name' => $firstname,
                 'last_name' => $lastname,
                 'email' => $faker->unique()->safeEmail,
+                'genre' => $faker->randomElement($genders),
+                'country' => $faker->country,
+                'city' => $faker->city,
+                'birthdate' => \Carbon\Carbon::createFromFormat('Y-m-d',$faker->dateTimeThisCentury()->format('Y-m-d'))->format('Y-m-d'),
                 'password' => bcrypt('password'),
                 'remember_token' => str_random(10)
             ]);

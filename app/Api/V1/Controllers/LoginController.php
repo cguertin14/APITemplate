@@ -10,6 +10,7 @@ use App\Api\V1\Requests\LoginRequest;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Auth;
+use Hash;
 
 class LoginController extends Controller
 {
@@ -23,12 +24,12 @@ class LoginController extends Controller
     public function login(LoginRequest $request, JWTAuth $JWTAuth)
     {
         $credentials = $request->only(['email', 'password']);
-
         try {
             $token = Auth::guard()->attempt($credentials);
 
             if(!$token) {
-                throw new AccessDeniedHttpException();
+                //throw new AccessDeniedHttpException();
+                return response()->json(['error' => 'Wrong credentials.'],400);
             }
 
         } catch (JWTException $e) {

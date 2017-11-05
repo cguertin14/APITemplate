@@ -38,7 +38,4 @@ $api->version('v1', function (Router $api) {
         $api->put('edit/email','EditUserController@modifyEmail');
         $api->put('edit/profilepic','EditUserController@modifyProfilePic');
     });
-
-
-
 });

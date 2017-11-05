@@ -14,8 +14,13 @@ return [
             'name' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
+            'birthdate' => 'required|date_format:"Y-m-d"',
+            'city' => 'required',
+            'country' => 'required',
+            'genre' => 'required',
             'email' => 'required|unique:users|email',
-            'password' => 'required'
+            'password' => 'required|confirmed|min:7|max:30|regex:/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{7,30}$.*$/',
+            'password_confirmation' => 'required|min:7|max:30'
         ]
     ],
 
@@ -26,6 +31,30 @@ return [
         'validation_rules' => [
             'email' => 'required|email',
             'password' => 'required'
+        ]
+    ],
+
+    // these options are related to the edit password procedure
+    'edit_password' => [
+        'validation_rules' => [ //different:old_password
+            'old_password' => 'required',
+            'password' => 'required|confirmed|min:7|max:30|regex:/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{7,30}$.*$/',
+            'password_confirmation' => 'required|min:7|max:30'
+        ]
+    ],
+
+    // these options are related to the edit email procedure
+    'edit_email' => [
+        'validation_rules' => [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]
+    ],
+
+    // these options are related to the edit profile pic procedure
+    'edit_profile_pic' => [
+        'validation_rules' => [
+            'newpicture' => 'required|image'
         ]
     ],
 
