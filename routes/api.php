@@ -20,9 +20,15 @@ $api->version('v1', function (Router $api) {
         $api->get('/loginfacebook', 'FacebookAuthController@redirect');
         $api->get('/callbackfb', 'FacebookAuthController@callback');
 
+        /*
+         * Forget/Reset Password
+         */
         $api->post('recovery', 'ForgotPasswordController@sendResetEmail');
         $api->post('reset', 'ResetPasswordController@resetPassword');
 
+        /**
+         * User Stuff
+         */
         $api->post('logout', 'LogoutController@logout');
         $api->post('refresh', 'RefreshController@refresh');
         $api->get('me', 'UserController@me');

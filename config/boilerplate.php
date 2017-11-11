@@ -36,9 +36,9 @@ return [
 
     // these options are related to the edit password procedure
     'edit_password' => [
-        'validation_rules' => [ //different:old_password
+        'validation_rules' => [
             'old_password' => 'required',
-            'password' => 'required|confirmed|min:7|max:30|regex:/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{7,30}$.*$/',
+            'password' => 'required|different:old_password|confirmed|min:7|max:30|regex:/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{7,30}$.*$/',
             'password_confirmation' => 'required|min:7|max:30'
         ]
     ],
