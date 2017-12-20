@@ -11,12 +11,22 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+use Intervention\Image\ImageManagerStatic as Image;
+use App\Image as ImageTable;
+
 Route::get('reset_password/{token}', ['as' => 'password.reset', function($token) {
 
     // implement your reset password route here!
 
 }]);
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/image/{id}', function ($id) {
+    if(!$upload = ImageTable::query()->findOrFail($id)){
+        return response()->json(['error' => 'Image not found!'], 404);
+    }
+    $img = Image::cache(function($image) use ($upload) {
+        $image->make($upload->image);
+    });
+    return Image::make($img)->response('jpg');
 });

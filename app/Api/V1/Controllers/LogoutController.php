@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use App\Http\Controllers\Controller;
 use Auth;
+use Dingo\Api\Http\Response;
 
 class LogoutController extends Controller
 {
@@ -26,6 +27,6 @@ class LogoutController extends Controller
     {
         Auth::guard()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out'],Response::HTTP_OK);
     }
 }

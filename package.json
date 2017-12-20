@@ -1,0 +1,29 @@
+{
+  "name": "artifex-api",
+  "version": "1.0.0",
+  "description": "Notification server template",
+  "main": "notification-server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "apn": "^2.2.0",
+    "express": "^4.16.2",
+    "node-pushnotifications": "^1.0.18",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cguertin14/Artifex-API.git"
+  },
+  "author": "Charles Guertin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cguertin14/Artifex-API/issues"
+  },
+  "homepage": "https://github.com/cguertin14/Artifex-API#readme"
+}

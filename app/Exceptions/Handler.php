@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use Dingo\Api\Http\Response;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler

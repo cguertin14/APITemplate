@@ -2,14 +2,16 @@
 
 namespace App\Api\V1\Controllers;
 
+use App\Http\Controllers\BaseController;
 use App\User;
 use App\Http\Controllers\Controller;
+use Dingo\Api\Http\Response;
 use Illuminate\Support\Facades\Password;
 use App\Api\V1\Requests\ForgotPasswordRequest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ForgotPasswordController extends Controller
+class ForgotPasswordController extends BaseController
 {
     public function sendResetEmail(ForgotPasswordRequest $request)
     {
@@ -23,12 +25,12 @@ class ForgotPasswordController extends Controller
         $sendingResponse = $broker->sendResetLink($request->only('email'));
 
         if($sendingResponse !== Password::RESET_LINK_SENT) {
-            throw new HttpException(500);
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
             'status' => 'ok'
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
     /**

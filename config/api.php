@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'domain' => env('API_DOMAIN', 'api.apitemplate.dev'),
+    'domain' => env('API_DOMAIN', 'api.artifex.test'),
 
     /*
     |--------------------------------------------------------------------------

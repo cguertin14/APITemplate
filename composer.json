@@ -10,7 +10,12 @@
         "tymon/jwt-auth": "dev-develop",
         "dingo/api": "2.0.0-alpha1",
         "barryvdh/laravel-cors": "^0.9.3",
-        "laravel/socialite": "^3.0"
+        "laravel/socialite": "^3.0",
+        "intervention/imagecache": "^2.3",
+        "cyvelnet/laravel5-fractal": "^2.2",
+        "facebook/graph-sdk": "^5.6",
+        "willdurand/geocoder": "^4.1",
+        "toin0u/geocoder-laravel": "^4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -42,11 +47,13 @@
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
+            "php artisan optimize",
+            "@php artisan cache:clear"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "php artisan optimize",
+            "@php artisan cache:clear"
         ]
     },
     "config": {

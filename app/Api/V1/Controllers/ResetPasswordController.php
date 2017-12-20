@@ -2,15 +2,18 @@
 
 namespace App\Api\V1\Controllers;
 
+use App\Http\Controllers\BaseController;
 use Config;
 use App\User;
+use Dingo\Api\Http\Response;
+use Faker\Provider\Base;
 use Tymon\JWTAuth\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Password;
 use App\Api\V1\Requests\ResetPasswordRequest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class ResetPasswordController extends Controller
+class ResetPasswordController extends BaseController
 {
     public function resetPassword(ResetPasswordRequest $request, JWTAuth $JWTAuth)
     {
@@ -21,13 +24,13 @@ class ResetPasswordController extends Controller
         );
 
         if($response !== Password::PASSWORD_RESET) {
-            throw new HttpException(500);
+            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         if(!Config::get('boilerplate.reset_password.release_token')) {
             return response()->json([
                 'status' => 'ok',
-            ]);
+            ],Response::HTTP_OK);
         }
 
         $user = User::where('email', '=', $request->get('email'))->first();
@@ -35,7 +38,7 @@ class ResetPasswordController extends Controller
         return response()->json([
             'status' => 'ok',
             'token' => $JWTAuth->fromUser($user)
-        ]);
+        ],Response::HTTP_OK);
     }
 
     /**

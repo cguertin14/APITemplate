@@ -8,58 +8,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Tools\ResponseHandling;
 use Dingo\Api\Routing\Helpers;
+use \App\Tools\Helper;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Item;
+use Dingo\Api\Http\Response;
 
 class BaseController extends Controller
 {
     use Helpers;
-    /**
-     * @var Manager
-     */
-    protected $fractal;
+    use Helper;
 
     /**
-     * BaseController constructor.
-     * @param Manager $fractal
+     * @param string $keyword
+     * @return Response|JsonResponse
      */
-    public function __construct(Manager $fractal) {
-        $this->fractal = $fractal;
-    }
+    public function search($keyword) {}
 
     /**
-     * @param $resource
-     * @param $transformer
-     * @return array
+     * @param string $keyword
+     * @return JsonResponse
      */
-    public function transformItem($resource, $transformer)
+    public function searchVerification($keyword)
     {
-        return $this->fractal->createData(new Item($resource, $transformer))->toArray();
-    }
-
-    /**
-     * @param $resource
-     * @param $transformer
-     * @return array
-     */
-    public function transformCollection($resource, $transformer)
-    {
-        return $this->fractal->createData(new Collection($resource, $transformer))->toArray();
-    }
-
-    /**
-     * @param $paginator
-     * @param $transformer
-     * @return array
-     */
-    public function paginate($paginator, $transformer)
-    {
-        $data = $paginator->getCollection();
-        $resources = new Collection($data, $transformer);
-        $resources->setPaginator(new IlluminatePaginatorAdapter($paginator));
-        return $this->fractal->createData($resources)->toArray();
+        if (!isset($keyword) || strlen($keyword) < 3) {
+            return response()->json(ResponseHandling::KEYWORD_LENGTH,ResponseHandling::HTTP_BAD_REQUEST);
+        }
     }
 }

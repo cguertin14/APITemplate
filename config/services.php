@@ -36,8 +36,8 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '1596155287073716',
-        'client_secret' => 'a787cc77827e97cd6b88c3e6d31699fc',
-        'redirect' => 'http://api.apitemplate.dev/callback',
+        'client_id' => '1524863834235048',
+        'client_secret' => 'b13b7b1e240a120046ee69e2db46761e',
+        'redirect' => 'http://api.artifex.dev/callbackfb',
     ],
 ];
