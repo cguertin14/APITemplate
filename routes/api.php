@@ -55,35 +55,17 @@ $api->version('v1', function (Router $api) {
 
     $api->group(['namespace' => 'App\Http\Controllers','middleware' => 'auth:api'], function (Router $api) {
         /**
-         * Event Controller
-         */
-        $api->get('/events/newsfeed','EventController@newsfeed');
-        $api->get('/events/search/{keyword}','EventController@search');
-        $api->post('/event/invite','EventController@inviteUser');
-        $api->post('/event/respond','EventController@answerToInvite');
-        $api->resource('/events','EventController');
-
-        /**
-         * Friends Controller
-         */
-        $api->get('/friends','FriendsController@index');
-        $api->get('/friends/{id}','FriendsController@show');
-        $api->post('/friends/add','FriendsController@addFriend');
-        $api->put('/friends/accept','FriendsController@acceptFriend');
-        $api->put('/friends/refuse','FriendsController@refuseFriend');
-        $api->delete('/friends/remove','FriendsController@removeFriend');
-        $api->put('/friends/block','FriendsController@blockFriend');
-
-        /**
-         * UserStats Controller
-         */
-        $api->get('/stats/user','UserStatsController@userStats');
-        $api->get('/stats/user/login','UserStatsController@loginStats');
-
-        /**
          * Conversation Controller
          */
         $api->get('/conversations/search/{keyword}','ConversationController@search');
         $api->resource('/conversations','ConversationController');
+
+        /**
+         * Notification Controller
+         */
+        $api->get('/notifications','NotificationController@index');
+        $api->post('/notifications','NotificationController@create');
+        $api->delete('/notification/{id}/delete','NotificationController@delete');
+        $api->delete('/notifications/clear','NotificationController@clear');
     });
 });

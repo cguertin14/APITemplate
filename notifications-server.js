@@ -2,7 +2,7 @@
 // notifications to be sent afterwards.
 // Also, apple key is necessary from
 // developer account.
-var options = {
+let options = {
     token: {
         key: "path/to/APNsAuthKey_XXXXXXXXXX.p8",
         keyId: "key-id",
@@ -51,7 +51,8 @@ function sendNewNotification(data) {
     let newNotification = new apn.Notification();
 
     // Fill notification attributes with real data
-    notifPayload[data.notification.type] = data.notification.body;
+    // CHANGE JSON ATTRIBUTES TO ONES FROM DATABASE.
+    notifPayload[data.notification.type] = data.notification.message;
     newNotification.alert = data.notification.message;
     newNotification.sound = 'ping.aiff';
     newNotification.payload = notifPayload;

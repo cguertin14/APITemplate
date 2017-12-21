@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use \Dingo\Api\Http\FormRequest;
+use Dingo\Api\Http\FormRequest;
 
-class EventAnswerToInviteRequest extends FormRequest
+class CreateNotificationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class EventAnswerToInviteRequest extends FormRequest
     public function rules()
     {
         return [
-            'invite_id' => 'required|numeric',
-            'status' => 'required|numeric'
+            'device_token' => 'required',
+            'message'      => 'required',
+            'type'         => 'required'
         ];
     }
 }
