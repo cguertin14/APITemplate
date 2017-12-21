@@ -38,7 +38,7 @@ io.on('connection', function (socket) {
     });
 
     // Send new notification to client
-    socket.on('send notification', function (data) {
+    socket.on('get notification', function (data) {
         io.sockets.emit('new notification', sendNewNotification(data));
     });
 });
@@ -49,8 +49,8 @@ function sendNewNotification(data) {
     let deviceToken = data.deviceToken;
     let notifPayload = [];
     let newNotification = new apn.Notification();
-    let toReturn = null;
 
+    // Fill notification attributes with real data
     notifPayload[data.notification.type] = data.notification.body;
     newNotification.alert = data.notification.message;
     newNotification.sound = 'ping.aiff';
@@ -59,7 +59,6 @@ function sendNewNotification(data) {
 
     apnProvider.send(newNotification, deviceToken).then( (result) => {
         // see documentation for an explanation of result
-        toReturn = result;
+        return result;
     });
-    return toReturn;
 }

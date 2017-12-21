@@ -15,10 +15,11 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type',['newMessage','friendRequest','eventRequest']);
-            $table->text('body');
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('notifiable_id');
+            $table->string('notifiable_type');
+            $table->string('message');
             $table->timestamps();
             $table->softDeletes();
         });
